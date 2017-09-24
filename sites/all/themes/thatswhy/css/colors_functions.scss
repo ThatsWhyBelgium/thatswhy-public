@@ -1,0 +1,218 @@
+$white : #FFF;
+$black : #343434;
+
+$cta : #56AAA3;
+
+$subtle_grey : #eaeaea;
+$normal_grey : #bbbbbb;
+$other_grey : #595959;
+
+// Animations
+// FROM RIGHT ANIMATION
+@-webkit-keyframes fromRightAnim1{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromRightAnim1{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromRightAnim1{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromRightAnim1{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@keyframes fromRightAnim1{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-webkit-keyframes fromRightAnim2{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromRightAnim2{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromRightAnim2{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromRightAnim2{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@keyframes fromRightAnim2{
+  0%{ left: 50%; opacity: 0; }
+  100%{ left: 0%; opacity: 1; }
+}
+
+@-webkit-keyframes fromRightAnim3{
+  0%{ right: -30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromRightAnim3{
+  0%{ right: -30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromRightAnim3{
+  0%{ right: -30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromRightAnim3{
+  0%{ right: -30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@keyframes fromRightAnim3{
+  0%{ right: -30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+// FROM BOTTOM ANIMATION
+@-webkit-keyframes fromBottomAnim1{
+  0%{ opacity: 0; }
+  100%{ bottom: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromBottomAnim1{
+  0%{ opacity: 0; }
+  100%{ bottom: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromBottomAnim1{
+  0%{ opacity: 0; }
+  100%{ bottom: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromBottomAnim1{
+  0%{ opacity: 0; }
+  100%{ bottom: 0%; opacity: 1; }
+}
+
+@keyframes fromBottomAnim1{
+  0%{ opacity: 0; }
+  100%{ bottom: 0%; opacity: 1; }
+}
+
+// FROM LEFT ANIMATION
+@-webkit-keyframes fromLeftAnim1{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromLeftAnim1{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromLeftAnim1{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromLeftAnim1{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@keyframes fromLeftAnim1{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-webkit-keyframes fromLeftAnim2{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromLeftAnim2{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromLeftAnim2{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromLeftAnim2{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@keyframes fromLeftAnim2{
+  0%{ right: 50%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-webkit-keyframes fromLeftAnim3{
+  0%{ right: 30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-moz-keyframes fromLeftAnim3{
+  0%{ right: 30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-o-keyframes fromLeftAnim3{
+  0%{ right: 30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-ms-keyframes fromLeftAnim3{
+  0%{ right: 30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@keyframes fromLeftAnim3{
+  0%{ right: 30%; opacity: 0; }
+  100%{ right: 0%; opacity: 1; }
+}
+
+@-webkit-keyframes headerArrow {
+    0%   {background-position: center 1.7em;}
+    50%  {background-position: center 2em;}
+    100% {background-position: cneter 1.7em;}
+}
+
+@-moz-keyframes headerArrow {
+    0%   {background-position: center 1.7em;}
+    50%  {background-position: center 2em;}
+    100% {background-position: cneter 1.7em;}
+}
+
+@-o-keyframes headerArrow {
+    0%   {background-position: center 1.7em;}
+    50%  {background-position: center 2em;}
+    100% {background-position: cneter 1.7em;}
+}
+
+@-ms-keyframes headerArrow {
+    0%   {background-position: center 1.7em;}
+    50%  {background-position: center 2em;}
+    100% {background-position: cneter 1.7em;}
+}
+
+
+@keyframes headerArrow {
+    0%   {background-position: center 1.7em;}
+    50%  {background-position: center 2em;}
+    100% {background-position: cneter 1.7em;}
+}

@@ -1,0 +1,338 @@
+@import 'colors_functions';
+// 4 type breakpoints
+// mobile (> 0px)
+// narrow (> 767px)
+// desktop (> 1200px)
+// wide (> 1600px) -> is standard.
+
+@media only screen and (max-width: 1600px) {
+  body {
+    font-size: 90%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 1024px) {
+  .mob-only {
+    display: block;
+  }
+
+  html.ms-ie {
+    .taxonomy-term {
+      &.vocabulary-diensten.view-mode-teaser_alt {
+        .icon {
+          a {
+            font-size: 35px;
+          }
+        }
+      }
+    }
+
+    .node {
+      &.node-project {
+        &.view-mode-teaser {
+          header {
+            .diensten {
+              .taxonomy-term {
+                .icon {
+                  a {
+                    font-size: 20px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+    }
+  }
+
+  .node {
+    &.node-blog {
+      &.view-mode-featured, &.view-mode-teaser_alt {
+        .header {
+          h2 {
+            padding-bottom: 0.5em;
+            margin-bottom: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen
+  and (max-device-width: 1024px)
+  and (orientation: landscape)
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+
+@media only screen and (max-width: 767px) {
+  body {
+    &.page-blog, &.page-taxonomy-term {
+      .main > .top {
+        margin-bottom: 0;
+      }
+
+      .main > .main {
+        margin-bottom: 2em !important;
+      }
+    }
+  }
+
+  .node {
+    &.node-overzichtspagina {
+      &.view-mode-full {
+        & > .body {
+          -webkit-columns: 1;
+          -moz-columns: 1;
+          columns: 1;
+        }
+      }
+    }
+
+    &.node-blog {
+      &.view-mode-teaser, &.view-mode-featured, &.view-mode-teaser_alt {
+        background: none;
+        margin-bottom: 1em !important;
+        text-shadow: none;
+        color: $black;
+
+        img {
+          opacity: 1;
+        }
+
+        .header {
+          position: relative;
+          left: auto;
+          top: auto;
+
+          width: 100%;
+          padding: 0.5em;
+
+          time {
+            color: $black;
+            &:before {
+              color: $black;
+            }
+          }
+
+          .cats {
+            .taxonomy-term {
+              .icon {
+                a {
+                  color: $black;
+                }
+              }
+            }
+          }
+
+          h2, h3 {
+            color: $black;
+          }
+
+          .inl {
+            color: $black;
+          }
+
+          .cta {
+            a {
+              background: $cta;
+              color: $white;
+
+              &:hover {
+                background: $cta;
+                color: $white;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          picture {
+            &:after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.node-project {
+      &.view-mode-teaser {
+        margin-bottom: 1em;
+        overflow: visible;
+
+        img {
+          -webkit-transform: none;
+          transform: none;
+          opacity: 1;
+          width: 100%;
+          margin-left: 0;
+        }
+
+        header {
+          position: relative;
+          left: auto;
+          top: auto;
+          padding: 1em 1em 4em 1em;
+
+          h3 {
+            padding-left: 0.5em;
+            &:after {
+              max-width: 100%;
+            }
+          }
+
+          .inl {
+            -webkit-transform: none;
+            transform: none;
+            opacity: 1;
+          }
+
+          .diensten {
+            text-align: right;
+            padding-right: 1em;
+            .taxonomy-term {
+              -webkit-transform: none;
+              transform: none;
+              opacity: 1;
+            }
+          }
+        }
+
+        &:hover {
+          img {
+            -webkit-transform: none;
+            transform: none;
+            opacity: 1;
+          }
+
+          header {
+            h3 {
+            }
+
+            .inl {
+              -webkit-transform: none;
+              transform: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.node-webform {
+      &.view-mode-teaser {
+        background: $cta;
+        color: $white;
+
+        p {
+          color: $white;
+        }
+      }
+    }
+
+    &.node-banner-item {
+      .fl-c {
+        .c4 {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .taxonomy-term {
+    &.vocabulary-diensten {
+      &.view-mode-teaser_alt {
+        margin-bottom: 2em;
+        .group-left {
+          margin-bottom: 1em;
+          .icon {
+            display: block;
+            margin: 0 auto;
+            padding-top: 0;
+          }
+        }
+      }
+
+      &.view-mode-teaser {
+        background: $cta;
+        color: $white;
+        height: auto !important;
+        padding: 1em;
+
+        .icon {
+          background-color: $white;
+
+          span {
+            color: $cta;
+          }
+        }
+
+        h2 {
+          color: $white;
+        }
+
+        .cta {
+          position: relative;
+          left: auto;
+          bottom: auto;
+
+          float: left;
+          width: 100%;
+
+          -webkit-transform: none;
+          transform: none;
+          opacity: 1;
+
+          a {
+            float: left;
+            width: 90%;
+            margin-left: 5%;
+            font-weight: bolder;
+          }
+        }
+      }
+    }
+  }
+
+  .view {
+    &.blog {
+      &.id-recent_g, &.id-recent_c {
+        .node-blog {
+          width: 100%;
+          margin-right: 0;
+        }
+      }
+
+      &.id-std {
+        .c-r {
+          &:last-child {
+            .node-blog:last-child {
+              margin-bottom: 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pager {
+    .item-list {
+      &:first-child {
+        width: 60%;
+        margin-right: 5%;
+      }
+
+      &:last-child {
+        width: 35%;
+        margin: 0;
+      }
+    }
+  }
+}

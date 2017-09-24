@@ -1,0 +1,27 @@
+<?php
+
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'thatswhy_seo') . '/includes/basic_seo_rules.inc';
+
+function thatswhy_seo_uninstall () {
+  $rules = thatswhy_seo_register_seo_rules();
+  dpm($rules);
+
+  // Delete dynamic variables
+  foreach (_node_types_build()->types as $type) {
+    // 1. Delete all rules
+    foreach ($rules as $rid => $rule) {
+      dpm('Deleting: ' . 'thatswhy_seo_' . $type->type . '_rule_' . $rid);
+      variable_del('thatswhy_seo_' . $type->type . '_rule_' . $rid);
+
+      dpm('Deleting: ' . 'thatswhy_seo_' . $type->type . '_rule_' . $rid . '_value');
+      variable_del('thatswhy_seo_' . $type->type . '_rule_' . $rid . '_value');
+    }
+    // 2. Delete own variable
+    dpm('Deleting: ' . 'thatswhy_seo_' . $type->type);
+    variable_del('thatswhy_seo_' . $type->type);
+  }
+
+  // Delete static variables
+  dpm('Deleting: ' . 'thatswhy_seo_allow_failures');
+  variable_del('thatswhy_seo_allow_failures');
+}

@@ -1,0 +1,10 @@
+name = "That's Why SEO helper"
+description = "SEO Helper to have the advantage of how you will score on Google, Yahoo, Bing"
+core = 7.x
+
+dependencies[] = entity_token
+dependencies[] = metatag
+
+package = SEO
+
+configure = admin/config/search/seo-settings

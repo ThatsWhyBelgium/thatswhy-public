@@ -1,0 +1,12 @@
+<?php
+
+function tw_ds_link_wrapper_ds_pre_render_alter(&$layout_render_array, &$context, &$vars) {
+  $layattr = trim($vars['layout_attributes']);
+
+  if(module_exists('token') && $context['entity_type'] == 'node' && !empty($layattr)) {
+    $node = node_load($vars['nid']);
+    $vars['layout_attributes'] = token_replace($vars['layout_attributes'], array(
+      'node' => $node
+    ));
+  }
+}

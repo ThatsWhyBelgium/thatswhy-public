@@ -1,0 +1,5 @@
+name = "That's Why Display Suite link wrapper"
+description = "Alters the attributes variable to have token support!"
+core = 7.x
+
+dependencies[] = ds

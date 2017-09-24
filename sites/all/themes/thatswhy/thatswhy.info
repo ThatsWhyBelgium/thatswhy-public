@@ -1,0 +1,34 @@
+name = "That's Why thema"
+description = "Standaard That's Why Thema"
+package = core
+version = 1.0-beta
+core = 7.x
+
+; stylesheet information
+;stylesheets[all][] = css/normalize.css
+;stylesheets[all][] = css/thatswhy_starter.css
+;stylesheets[all][] = css/carousel.css
+;stylesheets[all][] = css/standards.css
+stylesheets[all][] = css/thatswhy.css
+;stylesheets[all][] = css/standards_mobile.css
+;stylesheets[all][] = css/thatswhy_mobile.css
+
+; js information
+scripts[] = js/modernizr.min.js
+scripts[] = js/thatswhy.js
+
+; Region information
+regions[nav] = Navigation
+regions[header] = Header
+regions[content] = Content
+regions[footer] = Footer
+
+; Breakpoints
+breakpoints[wide] = (min-width: 1600px)
+breakpoints[desktop] = (min-width: 1200px)
+breakpoints[narrow] = (min-width: 767px)
+breakpoints[mob-ls] = (min-width: 0px) and (orientation: landscape)
+breakpoints[mobile] = (min-width: 0px)
+
+; Panels layouts
+plugins[panels][layouts] = templates/panels/layouts

@@ -1,0 +1,245 @@
+<?php
+
+module_load_include('inc', 'thatswhy_seo', 'includes/basic_seo_rules');
+module_load_include('inc', 'thatswhy_seo', 'includes/thatswhy_seo.admin');
+module_load_include('inc', 'thatswhy_seo', 'includes/thatswhy_seo.theme');
+
+
+function thatswhy_seo_help () {
+
+}
+
+function thatswhy_seo_menu () {
+  $items['admin/config/search/seo-settings'] = array(
+    'title' => "That's Why SEO Check" ,
+    'description' => "Configure the SEO checker" ,
+    'page callback' => "drupal_get_form" ,
+    'page arguments' => array('thatswhy_seo_settings') ,
+    'access arguments' => array('administer thatswhy_seo configuration') ,
+    'type' => MENU_NORMAL_ITEM ,
+  );
+
+  return $items;
+}
+
+function thatswhy_seo_form_node_type_form_alter (&$form, $form_state) {
+  $rules = module_invoke_all('register_seo_rules');
+
+  if (!isset($form['thatswhy_seo'])) {
+    $form['thatswhy_seo'] = array(
+      '#type' => 'fieldset' ,
+      '#title' => t('SEO Check') ,
+      '#collapsible' => TRUE ,
+      '#collapsed' => TRUE ,
+      '#weight' => 1 ,
+      '#group' => "additional_settings" ,
+    );
+  }
+
+  $form['thatswhy_seo']['thatswhy_seo'] = array(
+    '#type' => 'checkbox' ,
+    '#title' => t('Enable SEO Check') ,
+    '#default_value' => variable_get('thatswhy_seo_' . $form['#node_type']->type, 0) ,
+    '#description' => t("Check this box to enable That's Why SEO Checking for this node type.") ,
+  );
+
+  $form['thatswhy_seo']['rules'] = array(
+    '#type' => 'fieldset' ,
+    '#title' => t('Settings') ,
+    '#collapsible' => TRUE ,
+    '#collapsed' => (variable_get('thatswhy_seo_' . $form['#node_type']->type) == 0) ? TRUE : FALSE ,
+  );
+
+  foreach ($rules as $rid => $rule) {
+    $form['thatswhy_seo']['rules']['thatswhy_seo_rule_' . $rid] = array(
+      '#type' => 'checkbox' ,
+      '#title' => check_plain($rule['name']) ,
+      '#description' => check_plain($rule['description']) ,
+      '#default_value' => variable_get('thatswhy_seo_rule_' . $rid . '_' . $form['#node_type']->type, variable_get('thatswhy_seo_' . $form['#node_type']->type)) ,
+    );
+
+    $form['thatswhy_seo']['rules']['thatswhy_seo_rule_' . $rid . '_value'] = array(
+      '#type' => 'textfield' ,
+      '#title' => t('Applied element(s)') ,
+      '#description' => t('On what element or text should this be applied (tokens!)') ,
+      '#default_value' => variable_get('thatswhy_seo_rule_' . $rid . '_value_' . $form['#node_type']->type, $rule['default value']) ,
+    );
+  }
+
+  $form['thatswhy_seo']['token_help'] = array(
+    '#theme' => 'token_tree' ,
+    '#token_types' => array('node') ,
+  );
+}
+
+// function thatswhy_seo_node_edit_form_alter(&$form, &$form_state) {
+
+// }
+
+function thatswhy_seo_form_alter(&$form, &$form_state, $form_id) {
+  if(isset($form['#entity_type']) && $form['#entity_type'] == 'node') {
+    if(variable_get('thatswhy_seo_' . $form['#bundle'], 0) == 1) {
+      // Alter form to do some ajax shizzle!
+
+      $rules = module_invoke_all('register_seo_rules');
+
+      $form['title']['#ajax'] = array(
+        'callback' => 'thatswhy_seo_perform_checks_ajax' ,
+      );
+
+      // foreach ($rules as $rid => $rule) {
+      //   if (variable_get('thatswhy_seo_rule_' . $rid . '_' . $form['#bundle'], 0) == 1) {
+
+      //     $scan = token_scan(variable_get('thatswhy_seo_rule_' . $rid . '_value_' . $form['#bundle'], $rule['default value']));
+
+      //     $splitter = explode(':', key($scan['node']));
+
+      //     if (count($splitter) == 1) {
+
+      //     } else {
+      //       // Waarschijnlijk een metatag
+      //       if($splitter[0] == 'metatag') {
+      //         // Een metatag :)
+
+      //       } else {
+      //         // Iets anders! :)
+
+      //       }
+      //     }
+      //   }
+      // }
+    }
+  }
+
+}
+
+function thatswhy_seo_node_validate($node, $form, &$form_state) {
+  if (variable_get('thatswhy_seo_' . $form['type']['#value'], 0) != 0) {
+    thatswhy_seo_perform_checks($node, $form, $form_state);
+  }
+}
+
+function thatswhy_seo_perform_checks_ajax ($form, &$form_state) {
+  $commands = array();
+  drupal_get_messages();
+
+  $node = (object) $form_state['values'];
+
+  thatswhy_seo_perform_checks($node, $form, $form_state);
+
+  $commands[] = ajax_command_remove('div.messages');
+  $commands[] = ajax_command_prepend('.main-content', theme('status_messages'));
+
+  ajax_deliver(array(
+    '#type' => 'ajax' ,
+    '#commands' => $commands ,
+  ));
+}
+
+function thatswhy_seo_perform_checks ($node, $form, &$form_state) {
+  global $user;
+
+  $pass = TRUE;
+  $results = array();
+
+  $rules = module_invoke_all('register_seo_rules');
+
+  foreach ($rules as $rid => $rule) {
+    if (variable_get('thatswhy_seo_rule_' . $rid . '_' . $node->type, 0) == 1) {
+      if (!function_exists($rule['callback'])) {
+        drupal_set_message(t('The function !function for SEO-check "@rule" has not been found.', array(
+          '!function' => $rule['callback'] ,
+          '@rule' => $rule['name'] ,
+        )));
+        continue;
+      }
+
+      $value = token_replace(variable_get('thatswhy_seo_rule_' . $rid . '_value_' . $node->type, $rule['default value']), array('node' => $node));
+
+      $arguments = array(
+        $value,
+      );
+
+      if($rule['keywords'] === TRUE) {
+        $keywords = explode(',', token_replace('[node:metatag:keywords]', array('node'=> $node)));
+        foreach ($keywords as $keyword) {
+          $keyword = trim($keyword);
+          if (!empty($keyword)) {
+            $arguments['keywords'][] = $keyword;
+          }
+        }
+      }
+
+      $results[$rid]['results'] = call_user_func_array($rule['callback'], $arguments);
+    }
+  }
+
+  foreach ($results as $rid => $rule) {
+    $results[$rid]['rule'] = $rules[$rid];
+    if (count($rule['results']) == 1) {
+      $results[$rid]['results'][$rid]['data']['name'] = check_plain($rules[$rid]['name']);
+      $results[$rid]['results'][$rid]['attributes']['class'] = ($results[$rid]['results'][$rid]['data']['result'] === TRUE) ? 'passed' : 'failed';
+      $results[$rid]['results'][$rid]['data']['result'] = '<img src="'. file_create_url(drupal_get_path('module', 'thatswhy_seo') . '/img/' . $results[$rid]['results'][$rid]['attributes']['class']) . '.png" style="max-width: 15px;" />';
+    } else {
+      foreach ($rule['results'] as $rtid => $test_result) {
+        $results[$rid]['results'][$rtid]['attributes']['class'] = ($rule['results'][$rtid]['data']['result'] === TRUE) ? 'passed' : 'failed';
+        $results[$rid]['results'][$rtid]['data']['result'] = '<img src="'. file_create_url(drupal_get_path('module', 'thatswhy_seo') . '/img/' . $results[$rid]['results'][$rtid]['attributes']['class']) . '.png" style="max-width: 15px;" />';
+      }
+    }
+  }
+
+  $check_results = array(
+    '#type' => 'seo_thatswhy_results' ,
+    '#title' => t('Seo Results') ,
+    '#results' => $results ,
+  );
+
+  $message = drupal_render($check_results);
+  drupal_set_message($message);
+}
+
+function thatswhy_seo_wordipos($haystack, $needle, $offset=0) {
+  $pos = -1;
+  $found = FALSE;
+  while ($found === FALSE) {
+    $pos = stripos($haystack, $needle, $offset);
+    if ($pos === FALSE) {
+      return FALSE;
+    }
+
+    /* check if the characters before and after the found tag are non-word characters */
+    $expanded_string = (isset($haystack[$pos-1]) ? $haystack[$pos-1] :' ') . (isset($haystack[$pos+strlen($needle)]) ? $haystack[$pos+strlen($needle)] : ' ');
+    if (preg_match_all('/[\W_]/', $expanded_string, $null) == 2) {
+      $found = TRUE;
+    }
+    $offset = $pos+1;
+  }
+  return $pos;
+}
+
+function thatswhy_seo_density ($value, $keywords) {
+  if(count($keywords) == 0) {
+    return 0;
+  }
+
+  $words = preg_split('/\W+/', $value);
+  $total = count($words);
+
+  $nr_of_tags = 0;
+  foreach ($keywords as $keyword) {
+    $pos = -1;
+    while(($pos = thatswhy_seo_wordipos($value, $keyword, $pos+1)) !== FALSE) {
+      $nr_of_tags ++;
+    }
+  }
+
+  return 100*($nr_of_tags/$total);
+}
+
+function find_heading_tags ($type, $content) {
+  $pattern = "/<$type>(.*?)<\/$type>/";
+  preg_match_all($pattern, $content, $matches);
+  return $matches[1];
+}
+
+
